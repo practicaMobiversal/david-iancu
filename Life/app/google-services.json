@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "550214528239",
+    "firebase_url": "https://life-c8c39.firebaseio.com",
+    "project_id": "life-c8c39",
+    "storage_bucket": "life-c8c39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550214528239:android:52dc8720b70a775d",
+        "android_client_info": {
+          "package_name": "com.mobiversal.practica.life"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550214528239-o74r1k033u9igboekf7pm4dlnfb507tc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobiversal.practica.life",
+            "certificate_hash": "04077f4ad6f472a1a94bb16f7f92f2c3aa8f6c43"
+          }
+        },
+        {
+          "client_id": "550214528239-peipg02cgbma902vikptk7u9lfe4bj5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYyXLy_HPAvOr8Y6hORvj5jI60vm9FN3Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550214528239-peipg02cgbma902vikptk7u9lfe4bj5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
