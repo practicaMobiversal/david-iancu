@@ -1,10 +1,13 @@
 package com.mobiversal.practica.life;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,12 +26,19 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPassword;
     private Button mCreateBtn;
     private FirebaseAuth mAuth;
+    private ProgressDialog mRegProgress;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mRegProgress =new ProgressDialog(this);
+
+
+
         mAuth = FirebaseAuth.getInstance();
 
         mDisplayName = (EditText) findViewById(R.id.reg_display_name);
@@ -45,7 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String email =mEmail.getText().toString();
                 String password =mPassword.getText().toString();
 
-                register_user(display_name,email,password);
+                if(!TextUtils.isEmpty(display_name) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)) {
+
+                    mRegProgress.setTitle("Registering User");
+                    mRegProgress.setMessage("Please wait");
+                    mRegProgress.setCanceledOnTouchOutside(false);
+                    mRegProgress.show();
+                    register_user(display_name, email, password);
+                }
 
             }
         });
@@ -58,13 +75,15 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
+                    mRegProgress.dismiss();
                     Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
                     startActivity(mainIntent);
                     finish();
 
                 }else{
+                    mRegProgress.hide();
                     Log.e("RegisterActivity", "Register Error", task.getException());
-                    Toast.makeText(RegisterActivity.this," error",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this," Error",Toast.LENGTH_LONG).show();
                 }
 
 
@@ -73,4 +92,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

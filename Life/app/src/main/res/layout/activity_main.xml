@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
     tools:context="com.mobiversal.practica.life.MainActivity">
+
+    <include
+        android:id="@+id/main_page_toolbar" layout="@layout/app_bar_layout" />
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:clickable="true"
+        android:tint="@android:color/white"
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginEnd="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:id="@+id/textView"
+
+
+    <ListView
+        android:id="@+id/list_of_message"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="TextView" />
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:animateLayoutChanges="false"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/fab"
+        android:layout_below="@+id/main_page_toolbar" />
 
-    </android.support.design.widget.AppBarLayout>
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_alignTop="@+id/fab"
+        android:hint="@string/message"
+        android:layout_toStartOf="@+id/fab" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="244dp"
-            android:text="Welcome"
-            android:textSize="24sp" />
-    </RelativeLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

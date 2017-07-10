@@ -5,4 +5,11 @@
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
+    <string name="Name">Name</string>
+    <string name="Password">Password</string>
+    <string name="Email">Email</string>
+    <string name="log_out">Log Out</string>
+    <string name="create_account">Create Account</string>
+    <string name="login_to_your_accont">Login to your accont</string>
+    <string name="message">Message...</string>
 </resources>
