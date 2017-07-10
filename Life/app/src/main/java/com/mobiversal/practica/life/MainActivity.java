@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseListAdapter<ChatMessage> myAdapter;
     RelativeLayout activity_main;
 
+    private ListView mLVChat;
+
+    private EditText input;
+
     public MainActivity() {
     }
 
@@ -73,24 +77,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+         input = (EditText) findViewById(R.id.input);
 
         activity_main =(RelativeLayout) findViewById(R.id.activity_main);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText input = (EditText) findViewById(R.id.input);
+
 
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
                 FirebaseDatabase.getInstance().getReference().push()
                         .setValue(new ChatMessage(input.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getEmail()));
                 input.setText("");
-                displayChatMessage();
                 // Clear the input
 
+
+                mLVChat.smoothScrollToPosition(myAdapter.getCount() -1);
             }
         });
+
+        displayChatMessage();
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayChatMessage() {
 
-        ListView listOfMessage = (ListView) findViewById(R.id.list_of_message);
+        mLVChat = (ListView) findViewById(R.id.list_of_message);
         myAdapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.list_item, FirebaseDatabase.getInstance().getReference()) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
@@ -123,9 +131,11 @@ public class MainActivity extends AppCompatActivity {
                 messageUser.setText(model.getMessageUser());
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
 
+
             }
         };
-        listOfMessage.setAdapter(myAdapter);
+        mLVChat.setAdapter(myAdapter);
+
     }
 
 

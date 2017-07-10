@@ -12,7 +12,8 @@
     tools:context="com.mobiversal.practica.life.MainActivity">
 
     <include
-        android:id="@+id/main_page_toolbar" layout="@layout/app_bar_layout" />
+        android:id="@+id/main_page_toolbar" layout="@layout/app_bar_layout"
+         />
 
 
 

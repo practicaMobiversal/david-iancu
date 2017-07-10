@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.mobiversal.practica.life.StartActivity">
 
 
@@ -11,8 +12,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="191dp"
         android:text="Welcome to Life"
         android:textSize="30sp" />
 
@@ -23,7 +25,9 @@
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="86dp"
-        android:text="@string/create_new_accont" />
+        android:background="@android:color/holo_red_dark"
+        android:text="@string/create_new_accont"
+        android:textColor="@android:color/background_dark" />
 
     <Button
         android:id="@+id/start_login"
@@ -32,5 +36,7 @@
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
-        android:text="Login" />
+        android:background="@android:color/holo_red_dark"
+        android:text="Login"
+        android:textColor="@android:color/background_dark" />
 </RelativeLayout>

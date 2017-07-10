@@ -4,7 +4,7 @@
     android:id="@+id/main_app_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/holo_blue_bright"
     android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
