@@ -11,9 +11,33 @@
     android:paddingTop="0dp"
     tools:context="com.mobiversal.practica.life.MainActivity">
 
-    <include
-        android:id="@+id/main_page_toolbar" layout="@layout/app_bar_layout"
-         />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBarLayout">
+
+        <include
+            android:id="@+id/main_page_toolbar" layout="@layout/app_bar_layout"
+            />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_dark"></android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_tab_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appBarLayout">
+
+
+    </android.support.v4.view.ViewPager>
+
+
+
 
 
 
@@ -37,9 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="false"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/fab"
-        android:layout_below="@+id/main_page_toolbar" />
+        android:layout_below="@+id/appBarLayout" />
 
     <EditText
         android:id="@+id/input"

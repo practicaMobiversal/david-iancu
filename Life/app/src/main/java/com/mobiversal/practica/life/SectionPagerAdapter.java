@@ -24,14 +24,38 @@ class SectionPagerAdapter extends FragmentPagerAdapter{
                 SearchFragment searchFragment =new SearchFragment();
                 return searchFragment;
             case 2:
-
+                FriendsFragment friendsFragment= new  FriendsFragment();
+                return friendsFragment;
+            case 3:
+                GroupFragment groupFragment=new GroupFragment();
+                return groupFragment;
+            default: return null;
 
         }
-        return null;
+
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4 ;
+    }
+
+    public CharSequence getPageTitle(int position){
+
+        switch(position) {
+            case 0:
+                return "Chats";
+            case 1:
+                return "Groups";
+            case 2:
+                return "GeoS";
+            case 3:
+                return "Friends";
+            default:
+                return null;
+        }
+
+
     }
 }
+

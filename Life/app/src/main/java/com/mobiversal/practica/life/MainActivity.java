@@ -1,9 +1,12 @@
 package com.mobiversal.practica.life;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -27,7 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,FriendsFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
+
+
     private static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
@@ -35,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout activity_main;
 
     private ListView mLVChat;
-
     private EditText input;
+    private ViewPager mViewPager;
+    private SectionPagerAdapter mSectionPagerAdapter;
+    private TabLayout mTabLayout;
 
     public MainActivity() {
     }
@@ -52,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Life");
 
+        //tabs
+       mViewPager= (ViewPager) findViewById(R.id.main_tab_pager);
+        mSectionPagerAdapter= new SectionPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mSectionPagerAdapter);
+
+        mTabLayout=(TabLayout) findViewById(R.id.main_tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
 
 
         // Write a message to the database
@@ -211,5 +225,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
