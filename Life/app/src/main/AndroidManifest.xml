@@ -22,9 +22,10 @@
         <activity android:name=".StartActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".chat_main"></activity>
-        <activity android:name=".SettingActivity">
-        </activity>
+        <activity android:name=".chat_main" />
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".UserActiviy"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

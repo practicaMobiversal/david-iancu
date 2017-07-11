@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
         getSupportActionBar().setTitle("Life");
 
         //tabs
-       mViewPager= (ViewPager) findViewById(R.id.main_tab_pager);
+        mViewPager= (ViewPager) findViewById(R.id.main_tab_pager);
         mSectionPagerAdapter= new SectionPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionPagerAdapter);
 
@@ -222,6 +222,13 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
         if(item.getItemId()== R.id.main_logout_btn){
             FirebaseAuth.getInstance().signOut();
             sendToStart();
+        }
+
+
+
+        if(item.getItemId()== R.id.main_all_btn){
+            Intent allusers= new Intent( MainActivity.this,UserActiviy.class);
+            startActivity(allusers);
         }
 
         return true;
