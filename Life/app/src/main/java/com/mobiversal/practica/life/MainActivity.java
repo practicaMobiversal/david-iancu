@@ -231,6 +231,12 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
             startActivity(allusers);
         }
 
+        if(item.getItemId()== R.id.settings_btn){
+            Intent settings= new Intent( MainActivity.this,SettingActivity.class);
+            startActivity(settings);
+        }
+
+
         return true;
     }
 

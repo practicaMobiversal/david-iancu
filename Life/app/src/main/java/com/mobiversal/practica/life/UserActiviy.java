@@ -1,6 +1,7 @@
 package com.mobiversal.practica.life;
 
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserActiviy extends AppCompatActivity {
         private Toolbar mToolbar;
@@ -30,7 +34,7 @@ public class UserActiviy extends AppCompatActivity {
         getSupportActionBar().setTitle("All Users");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
-        mUsersDatabase= FirebaseDatabase.getInstance().getReference().child("Users");
+        mUsersDatabase= FirebaseDatabase.getInstance().getReference().child("users");
 
         mUsersList=(RecyclerView) findViewById(R.id.users_list);
         mUsersList.setHasFixedSize(true);
@@ -49,7 +53,7 @@ public class UserActiviy extends AppCompatActivity {
             protected void populateViewHolder(UsersViewHolder viewHolder, Users users, int position) {
 
                 viewHolder.setName(users.getName());
-
+                viewHolder.setImage(users.getTumbImage(),getApplicationContext());
 
             }
         };
@@ -73,10 +77,14 @@ public class UserActiviy extends AppCompatActivity {
 
             TextView mUserName= (TextView) mView.findViewById(R.id.user_single_name);
             mUserName.setText(name);
-
-
-
         }
+
+         public void setImage(String tumb_image, Context ct){
+
+             CircleImageView userImageView=(CircleImageView) mView.findViewById(R.id.circleImageView) ;
+             Picasso.with(ct).load(tumb_image).placeholder(R.drawable.default_user).into(userImageView);
+
+       }
     }
 
 

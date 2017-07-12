@@ -6,7 +6,8 @@
         android:id="@+id/main_all_btn"
         android:title="AllUsers"
         app:showAsAction="never" />
-    <item android:title="Settings" />
+    <item android:title="Settings"
+        android:id="@+id/settings_btn"/>
     <item
         android:id="@+id/main_logout_btn"
         android:title="@string/log_out" />

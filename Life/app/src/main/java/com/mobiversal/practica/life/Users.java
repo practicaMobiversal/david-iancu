@@ -1,13 +1,15 @@
 package com.mobiversal.practica.life;
 
-/**
- * Created by DavidEu on 11-Jul-17.
- */
 
 public class Users {
 
 
     public Users(){}
+
+
+
+    private String name;
+    private String TumbImage;
 
     public String getName() {
         return name;
@@ -17,22 +19,23 @@ public class Users {
         this.name = name;
     }
 
-    public String name;
+    public String getTumbImage() {
+        return TumbImage;
+    }
 
-    public Users(String name, String image) {
+
+
+
+
+    public Users(String name,String img) {
         this.name = name;
-        this.image = image;
+        this.TumbImage = img;
     }
 
-    public String getImage() {
 
-        return image;
-    }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 
-    public String image;
+
+
 
 }

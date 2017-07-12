@@ -6,50 +6,52 @@
     android:layout_height="match_parent"
     tools:context="com.mobiversal.practica.life.SettingActivity">
 
-    <android.support.v4.widget.CircleImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/settings_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/avatar"
-        android:layout_marginTop="32dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/default_user"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
 
     <TextView
+        android:id="@+id/settings_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="30sp"
-        android:id="@+id/settings_name"
-        android:layout_below="@+id/settings_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp" />
+        android:layout_marginTop="210dp"
+        android:text="Name"
+        android:textSize="30sp" />
 
     <Button
-        android:id="@+id/settings_iamge_btn"
+        android:id="@+id/settings_image_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
-        android:text="Change Iamge"
-        android:layout_below="@+id/settings_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="330dp"
+        android:text="Change Image"
+
+        />
 
     <Button
         android:id="@+id/settings_password_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:text="Change password"
-        android:layout_below="@+id/settings_iamge_btn"
-        android:layout_alignStart="@+id/settings_image" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:text="Change password" />
 
     <Button
         android:id="@+id/settings_block_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/settings_password_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="480dp"
         android:text="Block Users" />
 
     <TextView
@@ -57,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="280dp"
         android:text="TextView"
         android:textSize="30sp" />
 
