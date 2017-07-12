@@ -2,6 +2,7 @@ package com.mobiversal.practica.life;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +55,19 @@ public class UserActiviy extends AppCompatActivity {
 
                 viewHolder.setName(users.getName());
                 viewHolder.setImage(users.getTumbImage(),getApplicationContext());
+
+                final String user_id=getRef(position).getKey();
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent profileIntent = new Intent (UserActiviy.this,ProfileActivity.class);
+                        profileIntent.putExtra("user_id",user_id);
+                        startActivity(profileIntent);
+
+
+
+                    }
+                });
 
             }
         };
