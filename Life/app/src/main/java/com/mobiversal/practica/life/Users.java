@@ -9,7 +9,12 @@ public class Users {
 
 
     private String name;
-    private String TumbImage;
+
+    public void settumbimg(String tumbImage) {
+        tumbimg = tumbImage;
+    }
+
+    private String tumbimg;
 
     public String getName() {
         return name;
@@ -19,8 +24,8 @@ public class Users {
         this.name = name;
     }
 
-    public String getTumbImage() {
-        return TumbImage;
+    public String gettumbimg() {
+        return tumbimg;
     }
 
 
@@ -29,7 +34,7 @@ public class Users {
 
     public Users(String name,String img) {
         this.name = name;
-        this.TumbImage = img;
+        this.tumbimg = img;
     }
 
 

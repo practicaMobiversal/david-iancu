@@ -1,6 +1,8 @@
 package com.mobiversal.practica.life;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -23,12 +25,20 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -38,6 +48,7 @@ private FirebaseUser mCurentUser;
     private TextView mName;
     private Button mImageBtn;
     private static final int GallPick=1;
+    private ProgressDialog mProg;
 
 
     //storage
@@ -69,6 +80,7 @@ private FirebaseUser mCurentUser;
                 String name=dataSnapshot.child("name").getValue().toString();
                 String image=dataSnapshot.child("image").getValue().toString();
                 mName.setText(name);
+                Picasso.with(SettingActivity.this).load(image).placeholder(R.drawable.default_user).into(mImage);
             }
 
             @Override
@@ -99,6 +111,7 @@ mImageBtn.setOnClickListener(new View.OnClickListener(){
         if(requestCode== GallPick && resultCode==RESULT_OK){
         Uri imaguri= data.getData();
 
+
             CropImage.activity(imaguri)
                     .setAspectRatio(1,1)
                     .start(this);
@@ -109,9 +122,37 @@ mImageBtn.setOnClickListener(new View.OnClickListener(){
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
 
-                StorageReference storagepath=mProfImg.child("profile_images").child(random()+ ".jpg");
+                mProg = new ProgressDialog(SettingActivity.this);
+                mProg.setTitle("Uploading");
+                mProg.setMessage("Please wait");
+                mProg.setCanceledOnTouchOutside(false);
+                mProg.show();
+
+                Uri resultUri = result.getUri();
+                File filepath = new File(resultUri.getPath());
+                String curent_user_id = mCurentUser.getUid();
+
+                Bitmap tumb_Bitmap=null;
+                try {
+                    tumb_Bitmap = new Compressor(SettingActivity.this)
+                            .setMaxHeight(200)
+                            .setMaxWidth(200)
+                            .setQuality(75)
+                            .compressToBitmap(filepath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                tumb_Bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
+                final byte[] tumb_byte=baos.toByteArray();
+
+
+                        StorageReference
+                storagepath = mProfImg.child("profile_images").child(curent_user_id + ".jpg");
+               final StorageReference filePath = mProfImg.child("profile_images").child("tumbs").child(curent_user_id + ".jpg");
                 storagepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
 
 
@@ -119,6 +160,37 @@ mImageBtn.setOnClickListener(new View.OnClickListener(){
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
                         if (task.isSuccessful()) {
+
+                            final String download_url = task.getResult().getDownloadUrl().toString();
+                            UploadTask uploadtask= filePath.putBytes(tumb_byte);
+                            uploadtask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> tumbtask) {
+                                    String tumburl=tumbtask.getResult().getDownloadUrl().toString();
+                                    if (tumbtask.isSuccessful()) {
+
+                                        Map updateHasMap= new HashMap();
+                                        updateHasMap.put("image",download_url);
+                                        updateHasMap.put("tumbimg",tumburl);
+
+                                        mUserDatabase.updateChildren(updateHasMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    mProg.dismiss();
+
+                                                }
+
+                                            }
+                                        });
+
+
+                                    }
+                                }
+                            });
+
+
+
 
                         }
 
@@ -128,6 +200,7 @@ mImageBtn.setOnClickListener(new View.OnClickListener(){
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
+                mProg.dismiss();
             }
         }
 
