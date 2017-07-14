@@ -60,7 +60,7 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-  mName=(TextView) findViewById(R.id.settings_name);
+        mName=(TextView) findViewById(R.id.settings_name);
         mImage=(CircleImageView) findViewById(R.id.settings_image);
         mImageBtn=(Button) findViewById(R.id.settings_image_btn);
 
