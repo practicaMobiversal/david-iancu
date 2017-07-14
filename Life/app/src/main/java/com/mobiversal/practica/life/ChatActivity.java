@@ -111,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                 String retrieve_name = dataSnapshot.child("name").getValue(String.class);
                                 String retrieve_Email = dataSnapshot.child("Email").getValue(String.class);
-                                String retrieve_url = dataSnapshot.child("Image_URL").getValue(String.class);
+                                String retrieve_url = dataSnapshot.child("tumbimg").getValue(String.class);
 
 
 
