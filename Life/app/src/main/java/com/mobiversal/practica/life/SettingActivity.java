@@ -42,7 +42,7 @@ import id.zelory.compressor.Compressor;
 
 public class SettingActivity extends AppCompatActivity {
 
-    private DatabaseReference mUserDatabase;
+  private DatabaseReference mUserDatabase;
     private FirebaseUser mCurentUser;
     private CircleImageView mImage;
     private TextView mName;
@@ -56,11 +56,51 @@ public class SettingActivity extends AppCompatActivity {
     private StorageReference mProfImg;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+  mName=(TextView) findViewById(R.id.settings_name);
+        mImage=(CircleImageView) findViewById(R.id.settings_image);
+        mImageBtn=(Button) findViewById(R.id.settings_image_btn);
+
+        mProfImg= FirebaseStorage.getInstance().getReference();
+
+        mCurentUser= FirebaseAuth.getInstance().getCurrentUser();
+        String curent_id=mCurentUser.getUid();
+
+        mUserDatabase=FirebaseDatabase.getInstance().getReference().child("users").child(curent_id);
+
+        mUserDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String name=dataSnapshot.child("name").getValue().toString();
+                String image=dataSnapshot.child("image").getValue().toString();
+                mName.setText(name);
+                Picasso.with(SettingActivity.this).load(image).placeholder(R.drawable.default_user).into(mImage);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+mImageBtn.setOnClickListener(new View.OnClickListener(){
+    @Override
+    public void onClick(View v) {
+
+       Intent gall= new Intent();
+        gall.setType("image/*");
+        gall.setAction(getIntent().ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(gall, "Set Image"),GallPick);
+
+
+    }});
+
+    }
+
 
         mName=(TextView) findViewById(R.id.settings_name);
         mImage=(CircleImageView) findViewById(R.id.settings_image);
@@ -103,6 +143,9 @@ public class SettingActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -219,5 +262,8 @@ public class SettingActivity extends AppCompatActivity {
         }
         return randomStringBuilder.toString();
     }
+
+
+
 
 }

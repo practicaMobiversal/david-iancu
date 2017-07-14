@@ -65,10 +65,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String display_name = String.valueOf(dataSnapshot.child("name").getValue());
-                String image = String.valueOf(dataSnapshot.child("image").getValue());
+String name=dataSnapshot.child("name").getValue().toString();
+                String image=dataSnapshot.child("image").getValue().toString();
 
-                mProfileName.setText(display_name);
+                mProfileName.setText(name);
                 Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.default_user).into(mProfileImage);
 
                 mProgressDialog.dismiss();
