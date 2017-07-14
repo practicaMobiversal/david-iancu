@@ -3,6 +3,7 @@ package com.mobiversal.practica.life;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -38,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mCreateBtn;
     private FirebaseAuth mAuth;
     private ProgressDialog mRegProgress;
+    public static boolean loginStatus = false;
 private DatabaseReference mRef;
 
 
@@ -77,22 +79,39 @@ private DatabaseReference mRef;
 
             }
         });
-
+        DisplayMetrics metrics = getApplicationContext().getResources().getDisplayMetrics();
+        LoginActivity.Device_Width = metrics.widthPixels;
     }
 
-    private void register_user(final String display_name, String email, String password) {
+    private void register_user(final String display_name, final String email, String password) {
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
-
+                    LoginActivity.userEmail = email;
+                    loginStatus = true;
+//                    FirebaseUser user = mAuth.getCurrentUser();
+//                    String UserID=user.getEmail().replace("@","").replace(".","");
+//                    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+//
+//                    DatabaseReference ref1= mRootRef.child("users").child(UserID);
+//
+//                    ref1.child("Name").setValue(display_name.trim());
+//                    ref1.child("Image_Url").setValue("Null");
+//                    ref1.child("Email").setValue(user.getEmail());
+//                    loginStatus = true;
+//                    mRegProgress.dismiss();
+//                    Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
+//                    startActivity(mainIntent);
+//                    finish();
                     FirebaseUser curent_user=FirebaseAuth.getInstance().getCurrentUser();
                     String uid=curent_user.getUid();
                     mRef= FirebaseDatabase.getInstance().getReference().child("users").child(uid);
                     HashMap<String,String> uMap=new HashMap<String, String>();
                     uMap.put("name",display_name);
                     uMap.put("image","default");
+                    uMap.put("Email",email);
 
                     mRef.setValue(uMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

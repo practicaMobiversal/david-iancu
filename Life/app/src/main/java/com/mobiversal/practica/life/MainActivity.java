@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_main);
+        if(!RegisterActivity.loginStatus)
+            sendToStart();
         mAuth = FirebaseAuth.getInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
@@ -91,28 +93,29 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
             }
         });
 
-         input = (EditText) findViewById(R.id.input);
 
-        activity_main =(RelativeLayout) findViewById(R.id.activity_main);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                // Read the input field and push a new instance
-                // of ChatMessage to the Firebase database
-                FirebaseDatabase.getInstance().getReference().push()
-                        .setValue(new ChatMessage(input.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-                input.setText("");
-                // Clear the input
-
-
-                mLVChat.smoothScrollToPosition(myAdapter.getCount() -1);
-            }
-        });
-
-        displayChatMessage();
+//         input = (EditText) findViewById(R.id.input);
+//
+//        activity_main =(RelativeLayout) findViewById(R.id.activity_main);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                // Read the input field and push a new instance
+//                // of ChatMessage to the Firebase database
+//                FirebaseDatabase.getInstance().getReference().push()
+//                        .setValue(new ChatMessage(input.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+//                input.setText("");
+//                // Clear the input
+//
+//
+//                mLVChat.smoothScrollToPosition(myAdapter.getCount() -1);
+//            }
+//        });
+//
+//        displayChatMessage();
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -128,29 +131,29 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
 
     }
 
-    private void displayChatMessage() {
-
-        mLVChat = (ListView) findViewById(R.id.list_of_message);
-        myAdapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.list_item, FirebaseDatabase.getInstance().getReference()) {
-            @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-
-                //Get references to the views of list_item.xml
-                TextView messageText, messageUser, messageTime;
-                messageText = (TextView) v.findViewById(R.id.message_text);
-                messageUser = (TextView) v.findViewById(R.id.message_user);
-                messageTime = (TextView) v.findViewById(R.id.message_time);
-
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
-
-
-            }
-        };
-        mLVChat.setAdapter(myAdapter);
-
-    }
+//    private void displayChatMessage() {
+//
+//        mLVChat = (ListView) findViewById(R.id.list_of_message);
+//        myAdapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.list_item, FirebaseDatabase.getInstance().getReference()) {
+//            @Override
+//            protected void populateView(View v, ChatMessage model, int position) {
+//
+//                //Get references to the views of list_item.xml
+//                TextView messageText, messageUser, messageTime;
+//                messageText = (TextView) v.findViewById(R.id.message_text);
+//                messageUser = (TextView) v.findViewById(R.id.message_user);
+//                messageTime = (TextView) v.findViewById(R.id.message_time);
+//
+//                messageText.setText(model.getMessageText());
+//                messageUser.setText(model.getMessageUser());
+//                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
+//
+//
+//            }
+//        };
+//        mLVChat.setAdapter(myAdapter);
+//
+//    }
 
 
 
@@ -243,5 +246,13 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public boolean checkLogInStatus() {
+        boolean status = false;
+
+
+
+        return status;
     }
 }

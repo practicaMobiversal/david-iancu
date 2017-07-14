@@ -27,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mProfileName, mProfileFriendsCount;
     private Button mProfileSendReqBtn;
 
-    private  DatabaseReference mFriendsReqDatabase;
+    private DatabaseReference mFriendsReqDatabase;
     private DatabaseReference mUserDatabase;
     private ProgressDialog mProgressDialog;
 
@@ -43,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         final String user_id =getIntent().getStringExtra("user_id");
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Userss").child(user_id);
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
         mFriendsReqDatabase =FirebaseDatabase.getInstance().getReference().child("Friends_req");
         mCurrent_user =FirebaseAuth.getInstance().getCurrentUser();
 
@@ -65,8 +65,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String display_name = dataSnapshot.child("name").getValue().toString();
-                String image =dataSnapshot.child("image").getValue().toString();
+                String display_name = String.valueOf(dataSnapshot.child("name").getValue());
+                String image = String.valueOf(dataSnapshot.child("image").getValue());
 
                 mProfileName.setText(display_name);
                 Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.default_user).into(mProfileImage);

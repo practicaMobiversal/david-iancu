@@ -5,9 +5,10 @@
     tools:context="com.mobiversal.practica.life.ChatFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <Button
+        android:id="@+id/button_chat"
+        android:layout_width="162dp"
+        android:layout_height="61dp"
+        android:text="Button" />
 </FrameLayout>

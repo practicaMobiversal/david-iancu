@@ -22,12 +22,15 @@
         <activity android:name=".StartActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".chat_main" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".ChatConversationActivity" />
         <activity
             android:name=".UserActiviy"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ProfileActivity"></activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

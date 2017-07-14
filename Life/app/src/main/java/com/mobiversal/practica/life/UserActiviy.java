@@ -46,15 +46,15 @@ public class UserActiviy extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<Users,UsersViewHolder> firebaseRecyclerAdapter=
-                new FirebaseRecyclerAdapter<Users, UsersViewHolder>(Users.class, R.layout.users_single, UsersViewHolder.class,mUsersDatabase ) {
+        FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items,UsersViewHolder> firebaseRecyclerAdapter=
+                new FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, UsersViewHolder>(Show_Chat_Activity_Data_Items.class, R.layout.users_single, UsersViewHolder.class,mUsersDatabase ) {
 
 
             @Override
-            protected void populateViewHolder(UsersViewHolder viewHolder, Users users, int position) {
+            protected void populateViewHolder(UsersViewHolder viewHolder, Show_Chat_Activity_Data_Items users, int position) {
 
                 viewHolder.setName(users.getName());
-                viewHolder.setImage(users.getTumbImage(),getApplicationContext());
+                viewHolder.setImage(users.gettumbimg(),getApplicationContext());
 
                 final String user_id=getRef(position).getKey();
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -64,15 +64,12 @@ public class UserActiviy extends AppCompatActivity {
                         profileIntent.putExtra("user_id",user_id);
                         startActivity(profileIntent);
 
-
-
                     }
                 });
 
             }
         };
         mUsersList.setAdapter(firebaseRecyclerAdapter);
-
     }
 
 
