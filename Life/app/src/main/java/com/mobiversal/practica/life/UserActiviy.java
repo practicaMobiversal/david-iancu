@@ -108,8 +108,10 @@ public class UserActiviy extends AppCompatActivity {
             });
         }
 
-        public void setOnClickListener(ClickListener clickListener) {
+ public void setOnClickListener(ClickListener clickListener) {
             myListener = clickListener;
+
+
         }
     }
 
