@@ -14,13 +14,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/holo_blue_bright"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp">
+        app:layout_constraintVertical_bias="0.0">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -65,7 +66,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@android:color/holo_red_dark"
         android:focusableInTouchMode="true"
         android:gravity="bottom"
         android:orientation="horizontal"
@@ -81,7 +82,7 @@
             android:layout_height="35dp"
             android:layout_weight="4"
             android:padding="4dp"
-            android:src="@drawable/avatar" />
+            android:src="@drawable/attachment" />
 
         <EditText
             android:id="@+id/messageArea"

@@ -92,7 +92,7 @@ public class UserActiviy extends AppCompatActivity {
 
         public void setImage(String tumb_image, Context ct){
 
-            CircleImageView userImageView=(CircleImageView) mView.findViewById(R.id.circleImageView) ;
+            CircleImageView userImageView=(CircleImageView) mView.findViewById(R.id.single_user_img) ;
             Picasso.with(ct).load(tumb_image).placeholder(R.drawable.default_user).into(userImageView);
 
         }
