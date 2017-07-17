@@ -30,16 +30,21 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
     private ImageView mProfileImage;
     private TextView mProfileName, mProfileFriendsCount;
     private Button mProfileSendReqBtn;
 
+
     private DatabaseReference mFriendsReqDatabase;
     private DatabaseReference mFriendDatabase;
     private DatabaseReference mUserDatabase;
     private ProgressDialog mProgressDialog;
+    private DatabaseReference mNotificationDatabase;
+    private DatabaseReference mRootRef;
 
     private FirebaseUser mCurrent_user;
     private String mCurrent_state;
@@ -52,7 +57,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         final String user_id =getIntent().getStringExtra("user_id");
-
+        mRootRef=FirebaseDatabase.getInstance().getReference();
+        mNotificationDatabase=FirebaseDatabase.getInstance().getReference().child("notifications");
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
         mFriendsReqDatabase =FirebaseDatabase.getInstance().getReference().child("Friends_req");
         mFriendDatabase=FirebaseDatabase.getInstance().getReference().child("Friends");
@@ -154,29 +160,38 @@ String name=dataSnapshot.child("name").getValue().toString();
                 mProfileSendReqBtn.setEnabled(false);
                 if(mCurrent_state.equals("not_friends")){
 
-                    mFriendsReqDatabase.child(mCurrent_user.getUid()).child(user_id).child("request_type").setValue("send").addOnCompleteListener(new OnCompleteListener<Void>() {
+                    DatabaseReference NewNotificationRef=mRootRef.child("notifications").child(user_id).push();
+                            String NewNotificationId=NewNotificationRef.getKey();
+
+                    HashMap<String,String>notificationData=new HashMap<String, String>();
+                    notificationData.put("from",mCurrent_user.getUid());
+                    notificationData.put("type","request");
+
+
+                    Map friendMap=new HashMap<>();
+                    friendMap.put("Friend_req/"+mCurrent_user.getUid()+ "/"+user_id+"/request_type","sent");
+                    friendMap.put("Friend_req/"+user_id+"/"+mCurrent_user.getUid()+"/request_type","recived");
+                    friendMap.put("notifications/"+user_id+"/"+ NewNotificationId,notificationData);
+
+                    mFriendsReqDatabase.updateChildren(friendMap,new DatabaseReference.CompletionListener(){
+
+
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                mFriendsReqDatabase.child(user_id).child(mCurrent_user.getUid()).child("request_type").setValue("recived").addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                    mProfileSendReqBtn.setEnabled(true);
-                                        mCurrent_state="req_sent";
-                                        mProfileSendReqBtn.setText("Cancel Friend Request");
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                           if(databaseError !=null){
 
 
-                                    }
-                                });
+                           }
 
+                            mProfileSendReqBtn.setEnabled(true);
+                            mCurrent_state="req_sent";
+                            mProfileSendReqBtn.setText("Cancel Friend Request");
 
-
-                            }
-                            else{
-                                Toast.makeText(ProfileActivity.this,"Failed Sending",Toast.LENGTH_LONG).show();
-                            }
                         }
                     });
+
+
                 }
 
                 // -----------how to cancel------------------
