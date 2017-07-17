@@ -96,7 +96,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:background="@android:color/holo_red_dark"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

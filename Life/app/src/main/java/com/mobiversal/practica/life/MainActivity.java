@@ -30,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,FriendsFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
 
 
     private static final String TAG = "MainActivity";
@@ -94,66 +94,11 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
         });
 
 
-//         input = (EditText) findViewById(R.id.input);
-//
-//        activity_main =(RelativeLayout) findViewById(R.id.activity_main);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//                // Read the input field and push a new instance
-//                // of ChatMessage to the Firebase database
-//                FirebaseDatabase.getInstance().getReference().push()
-//                        .setValue(new ChatMessage(input.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-//                input.setText("");
-//                // Clear the input
-//
-//
-//                mLVChat.smoothScrollToPosition(myAdapter.getCount() -1);
-//            }
-//        });
-//
-//        displayChatMessage();
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//
-//            }
-//        });
-        //   Intent intent = new Intent(this,SecondActivity.class);
-        //      startActivity(intent );
 
     }
 
-//    private void displayChatMessage() {
-//
-//        mLVChat = (ListView) findViewById(R.id.list_of_message);
-//        myAdapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, R.layout.list_item, FirebaseDatabase.getInstance().getReference()) {
-//            @Override
-//            protected void populateView(View v, ChatMessage model, int position) {
-//
-//                //Get references to the views of list_item.xml
-//                TextView messageText, messageUser, messageTime;
-//                messageText = (TextView) v.findViewById(R.id.message_text);
-//                messageUser = (TextView) v.findViewById(R.id.message_user);
-//                messageTime = (TextView) v.findViewById(R.id.message_time);
-//
-//                messageText.setText(model.getMessageText());
-//                messageUser.setText(model.getMessageUser());
-//                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
-//
-//
-//            }
-//        };
-//        mLVChat.setAdapter(myAdapter);
-//
-//    }
+
 
 
 
