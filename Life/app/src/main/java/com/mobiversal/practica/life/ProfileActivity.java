@@ -82,7 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-String name=dataSnapshot.child("name").getValue().toString();
+                String name=dataSnapshot.child("name").getValue().toString();
+                //problem
                 String image=dataSnapshot.child("tumbimg").getValue().toString();
 
                 mProfileName.setText(name);
