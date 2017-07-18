@@ -165,11 +165,11 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 
-        private void Person_Name(String title) {
+        protected void Person_Name(String title) {
             // Log.d("LOGGED", "Setting Name: ");
             person_name.setText(title);
         }
-        private void Layout_hide() {
+        protected void Layout_hide() {
             params.height = 0;
             //itemView.setLayoutParams(params);
             layout.setLayoutParams(params);
@@ -177,12 +177,12 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 
-        private void Person_Email(String title) {
+        protected void Person_Email(String title) {
             person_email.setText(title);
         }
 
 
-        private void Person_Image(String url) {
+        protected void Person_Image(String url) {
 
             if (!url.equals("Null")) {
                 Glide.with(itemView.getContext())

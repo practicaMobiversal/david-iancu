@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
 
 
     private static final String TAG = "MainActivity";
@@ -57,41 +58,42 @@ public class MainActivity extends AppCompatActivity implements ChatFragment.OnFr
             sendToStart();
         mAuth = FirebaseAuth.getInstance();
 
-        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+
+       mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Life");
 
-        //tabs
-        mViewPager= (ViewPager) findViewById(R.id.main_tab_pager);
-        mSectionPagerAdapter= new SectionPagerAdapter(getSupportFragmentManager());
+
+
+       // Setup ViewPager.
+        mViewPager = (ViewPager) findViewById(R.id.main_tab_pager);
+        mSectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager()); // <-- This is the key
         mViewPager.setAdapter(mSectionPagerAdapter);
+
+        mViewPager.setOffscreenPageLimit(4);
 
         mTabLayout=(TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
 
-        // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message").child("1");
 
-        //myRef.setValue("Hello, World!");
-
-        // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
+
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
 
 
 
