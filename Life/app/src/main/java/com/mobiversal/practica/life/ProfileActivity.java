@@ -88,9 +88,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String name = dataSnapshot.child("name").getValue().toString();
-                String image = dataSnapshot.child("tumbimg").getValue().toString();
 
+                //problem
+                String image=dataSnapshot.child("tumbimg").getValue().toString();
                 mProfileName.setText(name);
                 Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.default_user).into(mProfileImage);
 

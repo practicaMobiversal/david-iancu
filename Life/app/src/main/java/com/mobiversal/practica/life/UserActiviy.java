@@ -3,6 +3,7 @@ package com.mobiversal.practica.life;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,7 +43,7 @@ public class UserActiviy extends AppCompatActivity {
         mUsersList.setHasFixedSize(true);
         mUsersList.setLayoutManager(new LinearLayoutManager(this));
 
-        FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items,UsersViewHolder> firebaseRecyclerAdapter=
+        final FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items,UsersViewHolder> firebaseRecyclerAdapter=
                 new FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, UsersViewHolder>(Show_Chat_Activity_Data_Items.class, R.layout.users_single, UsersViewHolder.class,mUsersDatabase ) {
                     @Override
                     public UsersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -74,7 +75,12 @@ public class UserActiviy extends AppCompatActivity {
                 };
         mUsersList.setAdapter(firebaseRecyclerAdapter);
 
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                firebaseRecyclerAdapter.notifyDataSetChanged();
+            }
+        }, 500L);
     }
 
     @Override
