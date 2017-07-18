@@ -36,6 +36,8 @@ public class FriendsFragment extends Fragment {
     private String mCurent_user_id;
     private View mMainView;
     private  DatabaseReference mUserDatabase;
+    private  DatabaseReference mUserDatabase1;
+
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -54,7 +56,9 @@ public class FriendsFragment extends Fragment {
         mFriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends").child(mCurent_user_id);
         mFriendsDatabase.keepSynced(true);
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+        mUserDatabase1 = FirebaseDatabase.getInstance().getReference().child("users");
         mUserDatabase.keepSynced(true);
+        mUserDatabase1.keepSynced(true);
         mFriendList.setHasFixedSize(true);
         mFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
         return mMainView;
@@ -64,23 +68,57 @@ public class FriendsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-    FirebaseRecyclerAdapter<Friends, FriendsViewHolder> friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(
+   FirebaseRecyclerAdapter<Friends, FriendsViewHolder> friendsRecyclerViewAdapter = new FirebaseRecyclerAdapter<Friends, FriendsViewHolder>(
                 Friends.class,
                 R.layout.users_single,
                 FriendsViewHolder.class,
                 mFriendsDatabase
         ) {
 
+
+
         public FriendsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             FriendsViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+            viewHolder.setOnClickListener(new FriendsViewHolder.ClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    final String user_id = getRef(position).getKey();
+                    mUserDatabase1=FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
 
-        return viewHolder;
+                    mUserDatabase1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            String retrieve_name = dataSnapshot.child("name").getValue(String.class);
+                            String retrieve_Email = dataSnapshot.child("Email").getValue(String.class);
+                            String retrieve_url = dataSnapshot.child("tumbimg").getValue(String.class);
+
+
+
+                            Intent intent = new Intent(getContext(), ChatConversationActivity.class);
+                            intent.putExtra("image_id", retrieve_url);
+                            intent.putExtra("email", retrieve_Email);
+                            intent.putExtra("name", retrieve_name);
+
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+
+            return viewHolder;
         }
+
             @Override
             protected void populateViewHolder(final FriendsViewHolder viewHolder, Friends friends, int i) {
 
                 viewHolder.mView.setText(friends.getDate());
-                String user_list_id=getRef(i).getKey();
+                final String user_list_id=getRef(i).getKey();
                 mUserDatabase.child(user_list_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,12 +131,12 @@ public class FriendsFragment extends Fragment {
                                 .into(viewHolder.circImageView);
                     }
 
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
+
 
 
 
@@ -115,21 +153,31 @@ public class FriendsFragment extends Fragment {
         TextView nameView;
         CircleImageView circImageView;
 
+        private FriendsViewHolder.ClickListener mymListener;
 
-
+        public interface ClickListener {
+            public void onItemClick(View view, int position);
+        }
         public FriendsViewHolder(View itemView){
             super(itemView);
           mView=(TextView) itemView.findViewById(R.id.user_single_tex);
             nameView = (TextView) itemView.findViewById(R.id.user_single_name);
             circImageView = (CircleImageView) itemView.findViewById(R.id.single_user_img);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mymListener.onItemClick(v, getAdapterPosition());
+                }
+            });
         }
-        public void setDate(String Date){
+        public void setOnClickListener(ClickListener clickListener) {
+            mymListener = clickListener;
 
-            TextView userNameView=(TextView) itemView.findViewById(R.id.user_single_tex);
-            userNameView.setText(Date);
+
         }
 
+        }
 
     }
-}
+

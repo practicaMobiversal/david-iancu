@@ -62,11 +62,9 @@ public class ChatActivity extends AppCompatActivity {
         //mLinearLayoutManager.setStackFromEnd(true);
 
         recyclerView.setLayoutManager(mLinearLayoutManager);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+//---------------------------------------------------------------------------------
+
         progressBar.setVisibility(ProgressBar.VISIBLE);
         //Log.d("LOGGED", "Will Start Calling populateViewHolder : ");
         //Log.d("LOGGED", "IN onStart ");
@@ -137,6 +135,14 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
 
     }
