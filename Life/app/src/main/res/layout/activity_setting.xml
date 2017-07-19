@@ -49,12 +49,12 @@
         android:text="Change password" />
 
     <Button
-        android:id="@+id/settings_block_btn"
+        android:id="@+id/change_geolimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="480dp"
-        android:text="Block Users" />
+        android:text="Change Geo Limit" />
 
     <TextView
         android:id="@+id/textView5"

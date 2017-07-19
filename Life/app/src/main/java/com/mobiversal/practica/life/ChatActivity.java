@@ -33,20 +33,20 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ChatActivity extends AppCompatActivity {
 
-    TextView person_name,person_email;
+    TextView person_name, person_email;
     RecyclerView recyclerView;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
-    public FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, Show_Chat_ViewHolder> mFirebaseAdapter;
+    public FirebaseRecyclerAdapter<User, Show_Chat_ViewHolder> mFirebaseAdapter;
     ProgressBar progressBar;
     LinearLayoutManager mLinearLayoutManager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.show_chat_layout);
-
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         myRef = firebaseDatabase.getReference("users");
@@ -56,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.show_chat_progressBar2);
 
         //Recycler View
-        recyclerView = (RecyclerView)findViewById(R.id.show_chat_recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.show_chat_recyclerView);
 
         mLinearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         //mLinearLayoutManager.setStackFromEnd(true);
@@ -68,23 +68,21 @@ public class ChatActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        //Log.d("LOGGED", "Will Start Calling populateViewHolder : ");
-        //Log.d("LOGGED", "IN onStart ");
 
 
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, Show_Chat_ViewHolder>(Show_Chat_Activity_Data_Items.class, R.layout.show_chat_single_item, Show_Chat_ViewHolder.class, myRef) {
 
-            public void populateViewHolder(final Show_Chat_ViewHolder viewHolder, Show_Chat_Activity_Data_Items model, final int position) {
-                //Log.d("LOGGED", "populateViewHolder Called: ");
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<User, Show_Chat_ViewHolder>(User.class, R.layout.show_chat_single_item, Show_Chat_ViewHolder.class, myRef) {
+
+            public void populateViewHolder(final Show_Chat_ViewHolder viewHolder, User model, final int position) {
+
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
 
                 if (!model.getName().equals("Null")) {
                     viewHolder.Person_Name(model.getName());
-                    if(model.gettumbimg() != null)
+                    if (model.gettumbimg() != null)
                         viewHolder.Person_Image(model.gettumbimg());
                     //viewHolder.Person_Email(model.getEmail());
-                    if(model.getEmail().equals(LoginActivity.userEmail))
-                    {
+                    if (model.getEmail().equals(LoginActivity.userEmail)) {
                         //viewHolder.itemView.setVisibility(View.GONE);
                         viewHolder.Layout_hide();
 
@@ -92,8 +90,7 @@ public class ChatActivity extends AppCompatActivity {
                         // viewHolder.itemView.set;
 
 
-                    }
-                    else
+                    } else
                         viewHolder.Person_Email(model.getEmail());
                 }
 
@@ -112,7 +109,6 @@ public class ChatActivity extends AppCompatActivity {
                                 String retrieve_name = dataSnapshot.child("name").getValue(String.class);
                                 String retrieve_Email = dataSnapshot.child("Email").getValue(String.class);
                                 String retrieve_url = dataSnapshot.child("tumbimg").getValue(String.class);
-
 
 
                                 Intent intent = new Intent(getApplicationContext(), ChatConversationActivity.class);
@@ -134,9 +130,6 @@ public class ChatActivity extends AppCompatActivity {
         };
 
         recyclerView.setAdapter(mFirebaseAdapter);
-
-
-
 
 
     }

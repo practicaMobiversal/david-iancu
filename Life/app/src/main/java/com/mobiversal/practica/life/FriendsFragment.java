@@ -84,8 +84,8 @@ public class FriendsFragment extends Fragment {
                 mUserDatabase.child(user_list_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String userName=dataSnapshot.child("name").getValue().toString();
-                        String tumbimg=dataSnapshot.child("tumbimg").getValue().toString();
+                        String userName=String.valueOf(dataSnapshot.child("name").getValue());
+                        String tumbimg=String.valueOf(dataSnapshot.child("tumbimg").getValue());
                         viewHolder.nameView.setText(userName);
                         Picasso.with(getContext())
                                 .load(tumbimg)

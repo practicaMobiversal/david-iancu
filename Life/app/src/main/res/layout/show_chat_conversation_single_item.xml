@@ -28,4 +28,33 @@
         android:minWidth="170dp"
         android:text="DEMO" />
 
+    <!--<ImageView-->
+        <!--android:id="@+id/chat_uploaded_image_incoming"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:adjustViewBounds="true"-->
+
+        <!--android:minWidth="150dp"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/attachment"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_marginLeft="22dp" />-->
+    <!--<ImageView-->
+        <!--android:id="@+id/chat_uploaded_image_outgoing"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginRight="22dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:adjustViewBounds="true"-->
+
+        <!--android:minWidth="150dp"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/attachment"-->
+        <!--android:visibility="visible" />-->
+
 </LinearLayout>

@@ -47,6 +47,7 @@ public class SettingActivity extends AppCompatActivity {
     private CircleImageView mImage;
     private TextView mName;
     private Button mImageBtn;
+    private Button changeGeo;
     private static final int GallPick=1;
     private ProgressDialog mProg;
 
@@ -68,7 +69,7 @@ public class SettingActivity extends AppCompatActivity {
         mName=(TextView) findViewById(R.id.settings_name);
         mImage=(CircleImageView) findViewById(R.id.settings_image);
         mImageBtn=(Button) findViewById(R.id.settings_image_btn);
-
+        changeGeo=(Button) findViewById(R.id.change_geolimit);
         mProfImg= FirebaseStorage.getInstance().getReference();
 
         mCurentUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -84,6 +85,7 @@ public class SettingActivity extends AppCompatActivity {
                 String image=dataSnapshot.child("image").getValue().toString();
                 mName.setText(name);
                 Picasso.with(SettingActivity.this).load(image).placeholder(R.drawable.default_user).into(mImage);
+
             }
 
             @Override
@@ -104,7 +106,16 @@ public class SettingActivity extends AppCompatActivity {
 
             }});
 
+        changeGeo.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SettingActivity.this,ChangeGeoActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

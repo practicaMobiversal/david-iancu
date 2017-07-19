@@ -30,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener{
 
 
     private static final String TAG = "MainActivity";

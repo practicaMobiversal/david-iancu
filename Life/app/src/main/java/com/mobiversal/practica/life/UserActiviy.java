@@ -1,7 +1,6 @@
 package com.mobiversal.practica.life;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +42,8 @@ public class UserActiviy extends AppCompatActivity {
         mUsersList.setHasFixedSize(true);
         mUsersList.setLayoutManager(new LinearLayoutManager(this));
 
-        final FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items,UsersViewHolder> firebaseRecyclerAdapter=
-                new FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, UsersViewHolder>(Show_Chat_Activity_Data_Items.class, R.layout.users_single, UsersViewHolder.class,mUsersDatabase ) {
+        final FirebaseRecyclerAdapter<User,UsersViewHolder> firebaseRecyclerAdapter=
+                new FirebaseRecyclerAdapter<User, UsersViewHolder>(User.class, R.layout.users_single, UsersViewHolder.class,mUsersDatabase ) {
                     @Override
                     public UsersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                         UsersViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
@@ -63,7 +62,7 @@ public class UserActiviy extends AppCompatActivity {
                     }
 
                     @Override
-                    protected void populateViewHolder(UsersViewHolder viewHolder, Show_Chat_Activity_Data_Items users, int position) {
+                    protected void populateViewHolder(UsersViewHolder viewHolder, User users, int position) {
 
                         viewHolder.nameView.setText(users.getName());
                         Picasso.with(getApplicationContext())
@@ -74,13 +73,14 @@ public class UserActiviy extends AppCompatActivity {
                     }
                 };
         mUsersList.setAdapter(firebaseRecyclerAdapter);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 firebaseRecyclerAdapter.notifyDataSetChanged();
             }
         }, 500L);
+
+
     }
 
     @Override
@@ -114,7 +114,7 @@ public class UserActiviy extends AppCompatActivity {
             });
         }
 
- public void setOnClickListener(ClickListener clickListener) {
+        public void setOnClickListener(ClickListener clickListener) {
             myListener = clickListener;
 
 
