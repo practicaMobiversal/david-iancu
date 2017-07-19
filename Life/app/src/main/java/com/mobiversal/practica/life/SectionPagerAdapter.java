@@ -3,12 +3,13 @@ package com.mobiversal.practica.life;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
  * Created by iancuu on 10.07.2017.
  */
 
-class SectionPagerAdapter extends FragmentPagerAdapter{
+class SectionPagerAdapter extends FragmentStatePagerAdapter {
     public SectionPagerAdapter(FragmentManager fm) {
         super(fm);
     }
