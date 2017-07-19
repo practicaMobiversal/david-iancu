@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -63,7 +64,8 @@ public class UserActiviy extends AppCompatActivity {
 
                     @Override
                     protected void populateViewHolder(UsersViewHolder viewHolder, User users, int position) {
-
+                        if (LoginActivity.userEmail.equals(users.getEmail()))
+                            viewHolder.Layout_hide();
                         viewHolder.nameView.setText(users.getName());
                         Picasso.with(getApplicationContext())
                                 .load(users.gettumbimg())
@@ -94,7 +96,8 @@ public class UserActiviy extends AppCompatActivity {
     public static class UsersViewHolder extends RecyclerView.ViewHolder{
         TextView nameView;
         CircleImageView circImageView;
-
+        private final RelativeLayout layout;
+        final RelativeLayout.LayoutParams params;
         private UsersViewHolder.ClickListener myListener;
 
         public interface ClickListener {
@@ -105,7 +108,8 @@ public class UserActiviy extends AppCompatActivity {
             super(itemView);
             nameView = (TextView) itemView.findViewById(R.id.user_single_name);
             circImageView = (CircleImageView) itemView.findViewById(R.id.single_user_img);
-
+            layout = (RelativeLayout) itemView.findViewById(R.id.user_single_item);
+            params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,10 +118,13 @@ public class UserActiviy extends AppCompatActivity {
             });
         }
 
+
         public void setOnClickListener(ClickListener clickListener) {
             myListener = clickListener;
-
-
+        }
+        private void Layout_hide() {
+            params.height=0;
+            layout.setLayoutParams(params);
         }
     }
 

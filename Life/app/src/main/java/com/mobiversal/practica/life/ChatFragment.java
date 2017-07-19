@@ -34,7 +34,7 @@ public class ChatFragment extends Fragment {
    private RecyclerView recyclerView;
   private   FirebaseDatabase firebaseDatabase;
    private DatabaseReference myRef;
-    public FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, ChatActivity.Show_Chat_ViewHolder> mFirebaseAdapter;
+    public FirebaseRecyclerAdapter<User, Show_Chat_ViewHolder> mFirebaseAdapter;
   private   ProgressBar progressBar;
    private LinearLayoutManager mLinearLayoutManager;
 
@@ -67,9 +67,9 @@ public class ChatFragment extends Fragment {
         //Log.d("LOGGED", "IN onStart ");
 
 
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, ChatActivity.Show_Chat_ViewHolder>(Show_Chat_Activity_Data_Items.class, R.layout.show_chat_single_item, ChatActivity.Show_Chat_ViewHolder.class, myRef) {
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<User, Show_Chat_ViewHolder>(User.class, R.layout.show_chat_single_item, Show_Chat_ViewHolder.class, myRef) {
 
-            public void populateViewHolder(final ChatActivity.Show_Chat_ViewHolder viewHolder, Show_Chat_Activity_Data_Items model, final int position) {
+            public void populateViewHolder(final Show_Chat_ViewHolder viewHolder, User model, final int position) {
                 //Log.d("LOGGED", "populateViewHolder Called: ");
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
 
@@ -107,8 +107,6 @@ public class ChatFragment extends Fragment {
                                 String retrieve_name = dataSnapshot.child("name").getValue(String.class);
                                 String retrieve_Email = dataSnapshot.child("Email").getValue(String.class);
                                 String retrieve_url = dataSnapshot.child("tumbimg").getValue(String.class);
-
-
 
                                 Intent intent = new Intent(getContext(), ChatConversationActivity.class);
                                 intent.putExtra("image_id", retrieve_url);
@@ -194,6 +192,9 @@ public class ChatFragment extends Fragment {
 
 
     }
-
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 
 }

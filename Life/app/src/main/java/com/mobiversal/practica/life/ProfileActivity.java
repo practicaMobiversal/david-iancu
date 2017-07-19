@@ -3,7 +3,6 @@ package com.mobiversal.practica.life;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
-import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.provider.ContactsContract;
@@ -29,14 +28,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+
 public class ProfileActivity extends AppCompatActivity {
     private ImageView mProfileImage;
     private TextView mProfileName, mProfileFriendsCount;
     private Button mProfileSendReqBtn, mDeclineBtn;
-
 
     private DatabaseReference mFriendsReqDatabase;
     private DatabaseReference mFriendDatabase;
@@ -241,7 +242,6 @@ public class ProfileActivity extends AppCompatActivity {
                 if (mCurrent_state.equals("req_received"))
 
                 {
-
                     final String curentDate = DateFormat.getDateTimeInstance().format(new Date());
 
                     Map friendMap = new HashMap<>();
