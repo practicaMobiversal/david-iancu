@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,12 +42,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class SettingActivity extends AppCompatActivity {
-
+    private static  String TAG = "null";
     private DatabaseReference mUserDatabase;
+    private DatabaseReference mUserDatabase1;
     private FirebaseUser mCurentUser;
     private CircleImageView mImage;
     private TextView mName;
     private Button mImageBtn;
+    private Button mPassBtn;
     private static final int GallPick=1;
     private ProgressDialog mProg;
 
@@ -64,6 +67,7 @@ public class SettingActivity extends AppCompatActivity {
        mName=(TextView) findViewById(R.id.settings_name);
         mImage=(CircleImageView) findViewById(R.id.settings_image);
         mImageBtn=(Button) findViewById(R.id.settings_image_btn);
+        mPassBtn=(Button) findViewById(R.id.settings_password_btn);
 
         mName=(TextView) findViewById(R.id.settings_name);
         mImage=(CircleImageView) findViewById(R.id.settings_image);
@@ -75,6 +79,8 @@ public class SettingActivity extends AppCompatActivity {
         String curent_id=mCurentUser.getUid();
 
         mUserDatabase=FirebaseDatabase.getInstance().getReference().child("users").child(curent_id);
+        mUserDatabase1=FirebaseDatabase.getInstance().getReference().child("users").child(curent_id).child("Email");
+
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,6 +88,8 @@ public class SettingActivity extends AppCompatActivity {
 
                 String name=dataSnapshot.child("name").getValue().toString();
                 String image=dataSnapshot.child("image").getValue().toString();
+                String email=dataSnapshot.child("Email").getValue().toString();
+                TAG=email;
                 mName.setText(name);
                 Picasso.with(SettingActivity.this).load(image).placeholder(R.drawable.default_user).into(mImage);
             }
@@ -103,6 +111,24 @@ public class SettingActivity extends AppCompatActivity {
 
 
             }});
+        mPassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseAuth.getInstance().sendPasswordResetEmail(TAG)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email sent.");
+                                }
+                                else{Log.d(TAG, String.valueOf(mUserDatabase1));}
+                            }
+                        });
+
+
+            }
+        });
 
 
     }

@@ -31,7 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class MainActivity extends AppCompatActivity implements GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MainActivity";
@@ -190,10 +190,6 @@ public class MainActivity extends AppCompatActivity implements GroupFragment.OnF
         return true;
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 
     public boolean checkLogInStatus() {
         boolean status = false;
