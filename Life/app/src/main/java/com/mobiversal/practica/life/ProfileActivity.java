@@ -92,7 +92,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                 String image=String.valueOf(dataSnapshot.child("tumbimg").getValue());
-                String name=dataSnapshot.child("name").getValue().toString();                mProfileName.setText(name);
+                String name=dataSnapshot.child("name").getValue().toString();
+                mProfileName.setText(name);
                 Picasso.with(ProfileActivity.this).load(image).placeholder(R.drawable.default_user).into(mProfileImage);
 
                 //-------friend list

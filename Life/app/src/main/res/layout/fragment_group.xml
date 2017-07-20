@@ -1,51 +1,84 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     tools:context="com.mobiversal.practica.life.GroupFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-
-    <ImageView
-        android:id="@+id/attachButton1"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-
-        android:padding="4dp"
-        android:src="@drawable/attachment"
-        android:layout_alignTop="@+id/sendButton1"
-        android:layout_toStartOf="@+id/messageArea1" />
-
-    <EditText
-        android:id="@+id/messageArea1"
-        android:layout_width="280dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
-        android:hint="Write a message..."
-        android:maxHeight="80dp"
-        android:textColor="@android:color/black"
+    </ScrollView>
 
-        android:textColorHint="@android:color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/sendButton1"
-        android:layout_marginBottom="8dp" />
 
-    <ImageView
-        android:id="@+id/sendButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:padding="4dp"
-        android:src="@android:drawable/ic_menu_send"
-        android:layout_alignBottom="@+id/messageArea1"
-        android:layout_alignParentEnd="true" />
 
     <ListView
+
         android:id="@+id/group_chat"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_above="@+id/lay1"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/lay1"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="7dp">
+
+
+        <ImageView
+            android:id="@+id/attachButton1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+
+            android:padding="4dp"
+            android:src="@drawable/attachment"
+            android:layout_alignTop="@+id/messageArea1"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp" />
+
+        <EditText
+            android:id="@+id/messageArea1"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+
+            android:hint="Write a message..."
+            android:maxHeight="80dp"
+            android:textColor="@android:color/black"
+
+            android:textColorHint="@android:color/black"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/sendButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_send"
+            android:layout_alignBottom="@+id/messageArea1"
+            android:layout_toEndOf="@+id/messageArea1" />
+
+
+
+
+
+    </LinearLayout>
 
 </RelativeLayout>

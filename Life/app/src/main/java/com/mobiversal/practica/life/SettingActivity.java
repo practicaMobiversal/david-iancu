@@ -49,6 +49,7 @@ public class SettingActivity extends AppCompatActivity {
     private CircleImageView mImage;
     private TextView mName;
     private Button mImageBtn;
+    private Button mPassBtn;
 private Button changeGeo;    private static final int GallPick=1;
     private ProgressDialog mProg;
 

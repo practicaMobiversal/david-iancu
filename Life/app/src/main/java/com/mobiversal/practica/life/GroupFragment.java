@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,12 +35,13 @@ import com.google.firebase.database.ValueEventListener;
 public class GroupFragment extends Fragment {
     private View mMainView;
     private DatabaseReference mUserDatabase;
-    public FirebaseRecyclerAdapter<Show_Chat_Activity_Data_Items, ChatActivity.Show_Chat_ViewHolder> mFirebaseAdapter;
+    public FirebaseRecyclerAdapter<User, ChatActivity.Show_Chat_ViewHolder> mFirebaseAdapter;
     private ListView mGrupChat;
     private ListView mLVChat;
     private FirebaseAuth mAuth;
     private String mCurent_user_id;
-    private ImageView mSendBtn,mAttachBtn;
+    private ImageView mAttachBtn;
+    private FloatingActionButton mSendBtn;
     private EditText mImput;
     private FirebaseListAdapter myAdapter;
 
@@ -56,9 +58,28 @@ public class GroupFragment extends Fragment {
         mGrupChat=(ListView) mMainView.findViewById(R.id.group_chat);
         mAuth = FirebaseAuth.getInstance();
         mUserDatabase= FirebaseDatabase.getInstance().getReference().child("users");
-        mSendBtn=(ImageView) mMainView.findViewById(R.id.sendButton1);
+        mSendBtn=(FloatingActionButton) mMainView.findViewById(R.id.sendButton1);
         mAttachBtn=(ImageView) mMainView.findViewById((R.id.attachButton1));
-        mImput=(EditText) mMainView.findViewById(R.id.messageArea1);
+
+
+        mSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {EditText input = (EditText) mMainView.findViewById(R.id.messageArea1);
+
+                // Read the input field and push a new instance
+                // of ChatMessage to the Firebase database
+                FirebaseDatabase.getInstance()
+                        .getReference().child("group")
+                        .push()
+                        .setValue(new ChatMessage(input.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                        );
+                input.setText("");
+                mLVChat.smoothScrollToPosition(myAdapter.getCount() -1);
+
+            }
+
+        });
+        displayChatMessage();
 
         return mMainView;
     }
@@ -67,25 +88,13 @@ public class GroupFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        mSendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FirebaseDatabase.getInstance().getReference().child("Group").push()
-                        .setValue(new ChatMessage(mImput.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getEmail()));
 
 
-
-                mLVChat.smoothScrollToPosition(myAdapter.getCount() - 1);
-            }
-        });
-
-        displayChatMessage();
     }
     private void displayChatMessage() {
 
         mLVChat = (ListView) mMainView.findViewById(R.id.group_chat);
-        myAdapter = new FirebaseListAdapter<ChatMessage>((Activity) getContext(), ChatMessage.class, R.layout.list_item, FirebaseDatabase.getInstance().getReference()) {
+        myAdapter = new FirebaseListAdapter<ChatMessage>((Activity) getContext(), ChatMessage.class, R.layout.list_item, FirebaseDatabase.getInstance().getReference().child("group")) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
 
@@ -98,11 +107,12 @@ public class GroupFragment extends Fragment {
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getMessageTime()));
-
+                mLVChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+                mLVChat.setStackFromBottom(true);
 
             }
         };
-        mLVChat.setAdapter((ListAdapter) myAdapter);
+        mLVChat.setAdapter( myAdapter);
 
 
 
