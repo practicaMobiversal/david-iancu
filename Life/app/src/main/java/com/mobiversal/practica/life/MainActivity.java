@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,8 +29,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+
+public class MainActivity extends AppCompatActivity implements ChatFragment.OnFragmentInteractionListener,GroupFragment.OnFragmentInteractionListener,SearchFragment.OnFragmentInteractionListener{
 
 
     private static final String TAG = "MainActivity";
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         if(!RegisterActivity.loginStatus)
             sendToStart();
         mAuth = FirebaseAuth.getInstance();
-
 
        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);

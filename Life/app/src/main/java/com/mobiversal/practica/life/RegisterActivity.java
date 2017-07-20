@@ -2,7 +2,10 @@ package com.mobiversal.practica.life;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +22,10 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.internal.kx;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -40,6 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog mRegProgress;
     public static boolean loginStatus = false;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private static final String DEFAULT_GEO_LIMIT = "10000";
+    double latitude;
+    double longitude;
+
 private DatabaseReference mRef;
 
 
@@ -47,6 +58,28 @@ private DatabaseReference mRef;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                        }
+                    }
+                });
 
         mRegProgress =new ProgressDialog(this);
 
@@ -105,6 +138,7 @@ private DatabaseReference mRef;
 //                    Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
 //                    startActivity(mainIntent);
 //                    finish();
+
                     FirebaseUser curent_user=FirebaseAuth.getInstance().getCurrentUser();
                     String uid=curent_user.getUid();
                     mRef= FirebaseDatabase.getInstance().getReference().child("users").child(uid);
@@ -112,6 +146,9 @@ private DatabaseReference mRef;
                     uMap.put("name",display_name);
                     uMap.put("image","default");
                     uMap.put("Email",email);
+                    uMap.put("Latitude", String.valueOf(latitude));
+                    uMap.put("Longitude", String.valueOf(longitude));
+                    uMap.put("GeoLimit", DEFAULT_GEO_LIMIT);
 
                     mRef.setValue(uMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

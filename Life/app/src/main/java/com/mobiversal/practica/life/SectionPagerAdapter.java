@@ -21,11 +21,12 @@ class SectionPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 ChatFragment chatFragment =new ChatFragment();
                 return chatFragment;
-            case 1:
-                GroupFragment groupFragment=new GroupFragment();
-                return groupFragment;
+return groupFragment;                return groupFragment;
             case 2:
             SearchFragment searchFragment =new SearchFragment();
+            return searchFragment;
+
+            case 2:SearchFragment searchFragment =new SearchFragment();
             return searchFragment;
 
             case 3:FriendsFragment friendsFragment= new  FriendsFragment();
